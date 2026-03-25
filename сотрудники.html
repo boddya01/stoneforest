@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Тест — Каменный лес</title>
+<style>
+:root{--dk:#1A3C2A;--md:#2D6A4F;--ac:#52B788;--lt:#D8F3DC;--pl:#F0FAF4;--gd:#E6A817;--rd:#C0392B;--tx:#1a1a1a;--mu:#6b7c72;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--pl);color:var(--tx);}
+.hdr{background:var(--dk);padding:24px 20px 20px;text-align:center;}
+.badge{display:inline-block;background:var(--ac);color:var(--dk);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:10px;}
+.hdr h1{font-size:24px;font-weight:800;color:#fff;margin-bottom:4px;}
+.hdr p{font-size:13px;color:rgba(255,255,255,.55);}
+.prog{background:#fff;padding:12px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10;box-shadow:0 2px 6px rgba(0,0,0,.06);border-bottom:1px solid var(--lt);}
+.pt{flex:1;height:7px;background:var(--lt);border-radius:99px;overflow:hidden;}
+.pf{height:100%;background:linear-gradient(90deg,var(--md),var(--ac));border-radius:99px;transition:width .4s;width:0%;}
+.pl{font-size:12px;font-weight:700;color:var(--md);white-space:nowrap;}
+.wrap{max-width:680px;margin:0 auto;padding:20px 16px 60px;}
+
+/* Start screen */
+.start-screen{background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(26,60,42,.1);padding:32px 28px;text-align:center;}
+.start-screen h2{font-size:20px;font-weight:800;color:var(--dk);margin-bottom:8px;}
+.start-screen p{font-size:14px;color:var(--mu);margin-bottom:24px;line-height:1.5;}
+.name-label{display:block;font-size:13px;font-weight:700;color:var(--dk);margin-bottom:8px;text-align:left;}
+.name-input{width:100%;padding:13px 16px;border:2px solid #dceee4;border-radius:10px;font-family:inherit;font-size:15px;color:var(--tx);background:var(--pl);outline:none;transition:border-color .15s;}
+.name-input:focus{border-color:var(--ac);}
+.start-btn{display:block;width:100%;margin-top:20px;background:var(--dk);color:#fff;border:none;border-radius:12px;padding:15px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;}
+.start-btn:active{background:var(--md);}
+.start-btn:disabled{background:#ccc;cursor:default;}
+.info-row{display:flex;gap:12px;margin-bottom:24px;}
+.info-pill{flex:1;background:var(--lt);border-radius:10px;padding:12px 8px;text-align:center;}
+.info-pill strong{display:block;font-size:20px;font-weight:800;color:var(--dk);}
+.info-pill span{font-size:11px;color:var(--mu);font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+
+/* Cards */
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(26,60,42,.1);border:2px solid transparent;padding:22px 20px 18px;margin-bottom:18px;}
+.card.ok{border-color:var(--ac);}.card.err{border-color:var(--rd);}
+.qmeta{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.qnum{background:var(--dk);color:#fff;font-size:11px;font-weight:700;width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.qtag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--lt);color:var(--md);padding:3px 9px;border-radius:20px;}
+.qsec{font-size:10px;color:var(--mu);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-left:auto;}
+.qtxt{font-size:15px;font-weight:600;line-height:1.5;color:var(--dk);margin-bottom:16px;}
+.opts{display:flex;flex-direction:column;gap:8px;}
+.opt{display:flex;align-items:flex-start;gap:10px;background:var(--pl);border:2px solid #dceee4;border-radius:10px;padding:11px 14px;cursor:pointer;font-size:14px;font-weight:500;line-height:1.4;}
+.opt.sel{background:var(--lt);border-color:var(--ac);}
+.opt.ca{background:#eafaf1;border-color:var(--ac);}
+.opt.wa{background:#fdf2f2;border-color:var(--rd);}
+.dot{width:18px;height:18px;border-radius:50%;border:2px solid #b0ccba;flex-shrink:0;margin-top:1px;}
+.opt.sel .dot,.opt.ca .dot{background:var(--ac);border-color:var(--ac);}
+.opt.wa .dot{background:var(--rd);border-color:var(--rd);}
+.tfw{display:flex;gap:10px;}
+.tfb{flex:1;padding:12px;border:2px solid #dceee4;border-radius:10px;background:var(--pl);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;}
+.tfb.sel{background:var(--md);border-color:var(--md);color:#fff;}
+.tfb.ctf{background:var(--ac);border-color:var(--ac);color:#fff;}
+.tfb.wtf{background:var(--rd);border-color:var(--rd);color:#fff;}
+.tfb:disabled{cursor:default;}
+.ota{width:100%;padding:11px 14px;border:2px solid #dceee4;border-radius:10px;font-family:inherit;font-size:14px;color:var(--tx);background:var(--pl);resize:vertical;min-height:80px;outline:none;}
+.ota:focus{border-color:var(--ac);}
+.ota:disabled{background:#f0f0f0;color:var(--mu);}
+.cbtn{margin-top:14px;background:var(--dk);color:#fff;border:none;border-radius:10px;padding:11px 22px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;display:block;}
+.cbtn:disabled{background:#ccc;cursor:default;}
+.navrow{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;}
+.nbtn{background:transparent;border:2px solid var(--ac);color:var(--md);border-radius:10px;padding:9px 18px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;}
+.nbtn.pri{background:var(--dk);border-color:var(--dk);color:#fff;}
+.fb{margin-top:12px;padding:11px 14px;border-radius:10px;font-size:13px;line-height:1.5;display:none;}
+.fb.show{display:block;}
+.fb.fbok{background:#eafaf1;color:#1a5c36;border-left:4px solid var(--ac);}
+.fb.fberr{background:#fdf2f2;color:#8b1a1a;border-left:4px solid var(--rd);}
+.fb.fbop{background:#fffbea;color:#7a5000;border-left:4px solid var(--gd);}
+.fbtit{font-weight:700;display:block;margin-bottom:3px;}
+
+/* Results */
+#res{display:none;}
+.sc{background:var(--dk);border-radius:16px;padding:30px 22px;text-align:center;margin-bottom:20px;}
+.scname{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:4px;}
+.scpct{font-size:60px;font-weight:900;color:var(--ac);line-height:1;margin:8px 0 4px;}
+.sctit{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px;}
+.scsub{color:rgba(255,255,255,.5);font-size:13px;}
+.scof{color:rgba(255,255,255,.35);font-size:12px;margin-top:4px;}
+.saved-badge{display:inline-block;background:rgba(82,183,136,.2);color:var(--ac);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;margin-top:14px;}
+.saving-badge{display:inline-block;background:rgba(255,255,255,.1);color:rgba(255,255,255,.5);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;margin-top:14px;}
+.rvtit{font-size:18px;font-weight:800;color:var(--dk);margin:0 0 14px;}
+.rvc{background:#fff;border-radius:12px;padding:16px 18px;margin-bottom:12px;border-left:5px solid;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.rvc.rvok{border-color:var(--ac);}.rvc.rverr{border-color:var(--rd);}.rvc.rvop{border-color:var(--gd);}
+.rvmeta{display:flex;gap:8px;align-items:center;margin-bottom:6px;}
+.rvbdg{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:20px;}
+.rvbdg.ok{background:#eafaf1;color:#1a5c36;}.rvbdg.err{background:#fdf2f2;color:#8b1a1a;}.rvbdg.op{background:#fffbea;color:#7a5000;}
+.rvsec{font-size:10px;color:var(--mu);font-weight:600;text-transform:uppercase;}
+.rvq{font-size:13px;font-weight:700;color:var(--dk);margin-bottom:5px;}
+.rva{font-size:12px;color:var(--mu);}.rva b{color:var(--tx);font-weight:700;}
+.rvca{font-size:12px;color:var(--md);margin-top:2px;}.rvca b{font-weight:700;}
+.rvex{font-size:12px;color:var(--mu);margin-top:5px;line-height:1.4;}
+.rbtn{display:block;width:100%;background:var(--dk);color:#fff;border:none;border-radius:12px;padding:14px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="badge">Каменный лес - с 2021</div>
+  <h1>Аттестация сотрудника</h1>
+  <p>Проверь знание операционного гайда</p>
+</div>
+<div class="prog" id="prog" style="display:none">
+  <div class="pt"><div class="pf" id="pf"></div></div>
+  <div class="pl" id="pl">0 / 20</div>
+</div>
+<div class="wrap">
+  <div id="start"></div>
+  <div id="quiz" style="display:none"></div>
+  <div id="res"></div>
+</div>
+<script type="application/json" id="qdata">
+[
+  {"t":"r","s":"Открытие","q":"За сколько минут до начала смены нужно прийти?","o":["За 5 минут","За 10 минут","За 15 минут","За 30 минут"],"a":2,"e":"Раздел 01: прийти за 15 минут до начала смены."},
+  {"t":"b","s":"Открытие","q":"Кофемашину нужно включить сразу при открытии, до прихода гостей.","a":false,"e":"Кофемашину включаем ТОЛЬКО при появлении первых гостей."},
+  {"t":"r","s":"Закрытие","q":"Что отправляем в Telegram-бот при закрытии смены?","o":["Пишем смена закрыта в чат","Фото бара, кальянной зоны, наличные, фото терминала и накладных","Только сумму наличных","Ничего, отчет делает администратор"],"a":1,"e":"Раздел 01: 2 фото бара, фото кальянной зоны, наличные в кассе, фото закрытия терминала или накладных, сумма по QR."},
+  {"t":"b","s":"Закрытие","q":"При закрытии достаточно выключить свет и уйти, если зал чистый.","a":false,"e":"Нужно выполнить весь чек-лист, отчет в боте, видеоотчет и поставить на сигнализацию."},
+  {"t":"r","s":"Гости","q":"С какой фразы начинается встреча гостей?","o":["Проходите, садитесь","Добрый день / вечер","Чего желаете?","Столик на сколько?"],"a":1,"e":"Раздел 02: начинаем с Добрый день / вечер, затем уточняем количество и место."},
+  {"t":"r","s":"Расчет","q":"Максимальный процент от чека, который можно списать бонусами:","o":["10%","20%","30%","50%"],"a":2,"e":"Раздел 02: списание бонусов — до 30% от суммы чека."},
+  {"t":"b","s":"Расчет","q":"Бонусы Locards начисляются на кальян стоимостью 890 руб.","a":false,"e":"Бонусы НЕ начисляются и НЕ списываются на кальян за 890 руб. и на позиции по акции."},
+  {"t":"r","s":"Гости","q":"Что предлагаем гостю после расчета?","o":["Ещё один заказ","Оставить отзыв на 2ГИС или Яндекс Картах","Зарегистрироваться повторно","Ничего, попрощаться"],"a":1,"e":"Раздел 02: Будем рады отзывам на 2ГИС или Яндекс Картах."},
+  {"t":"r","s":"Лояльность","q":"Сколько бонусов начисляется после первого чека новому участнику?","o":["500 руб.","1000 руб.","2000 руб.","200 руб."],"a":1,"e":"Раздел 02: после первого чека — 1000 бонусных рублей, действуют 30 дней."},
+  {"t":"r","s":"Лояльность","q":"Кэшбэк базового уровня карты Locards (1 уровень):","o":["3%","5%","7%","10%"],"a":1,"e":"Раздел 03: 1 уровень — 5%, 2 уровень (от 25000 руб.) — 7%, 3 уровень (от 70000 руб.) — 10%."},
+  {"t":"r","s":"Locards","q":"Пин-код администратора в приложении Locards:","o":["1234","0000","1111","2021"],"a":1,"e":"Раздел 03: пин-код — 0000."},
+  {"t":"r","s":"Лояльность","q":"За сколько дней ДО дня рождения начисляются 1000 бонусов?","o":["За 1 день","За 3 дня","За 7 дней","В сам день рождения"],"a":1,"e":"Раздел 03: за 3 дня до дня рождения автоматически начисляется 1000 бонусов."},
+  {"t":"r","s":"Мероприятия","q":"Стоимость входа с 23:00 в обычные выходные (DJ) без карты лояльности:","o":["Бесплатно","200 руб.","300 руб.","500 руб."],"a":2,"e":"Раздел 12: обычные выходные (DJ) — 300 руб. без карты, бесплатно по карте лояльности."},
+  {"t":"b","s":"Бронирование","q":"В комментарии к брони в Axle CRM пишем количество человек и имя сотрудника.","a":true,"e":"Раздел 12: пример — 5 человек, бронь Аня."},
+  {"t":"r","s":"Море Суши","q":"До какого времени работает кухня Море Суши?","o":["До 22:00","До 22:50","До 23:00","До 23:30"],"a":1,"e":"Раздел 10: кухня Море Суши работает ежедневно до 22:50."},
+  {"t":"r","s":"Поставщики","q":"Что делаем с алкоголем при приемке — в отличие от других товаров?","o":["Просто подписываем накладную","Пробиваем каждую бутылку через ЕГАИС, сверяем цену, закрываем чек","Только фотографируем накладную","Уведомляем руководство и ждем"],"a":1,"e":"Раздел 13: алкоголь — отсканировать акциз каждой бутылки, сверить цену, закрыть чек в ЕГАИС."},
+  {"t":"r","s":"Штрафы","q":"Штраф за грязное закрытие заведения:","o":["250 руб.","500 руб.","1000 руб.","2000 руб."],"a":1,"e":"Раздел 16: грязное закрытие — штраф 500 руб."},
+  {"t":"b","s":"Должности","q":"Официант может выполнять обязанности кальянщика, если тот занят.","a":false,"e":"Раздел 04: самовольное исполнение обязанностей другой должности — штраф 500 руб."},
+  {"t":"r","s":"Премии","q":"Премия каждому сотруднику при выручке 110000 руб. за смену:","o":["+250 руб.","+500 руб.","+1000 руб.","+750 руб."],"a":1,"e":"Раздел 16: при выручке 110000 руб. — премия +500 руб. каждому."},
+  {"t":"o","s":"История","q":"Когда открылся бар и как изначально он назывался?","e":"22 января 2021 года открылся бар Stone Forest. С 1 марта 2026 переименован в Каменный лес."}
+]
+</script>
+<script>
+(function() {
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3Qq6RtCqKJG75AhnjDkiFJcSh2xJ30JRvFjXFpnHdpq5CuDZOGmeiyaOGlSEoO98u1A/exec';
+  var Q = JSON.parse(document.getElementById('qdata').textContent);
+  var N = Q.length;
+  var ANS = [];
+  var CHK = [];
+  var userName = '';
+  for (var i = 0; i < N; i++) { ANS.push(null); CHK.push(false); }
+
+  function setText(el, text) { el.textContent = text; }
+
+  // ── Start screen ──────────────────────────────────────────────
+  function renderStart() {
+    var s = document.getElementById('start');
+    s.innerHTML = '';
+
+    var card = document.createElement('div');
+    card.className = 'start-screen';
+
+    var h2 = document.createElement('h2');
+    setText(h2, 'Привет!');
+    card.appendChild(h2);
+
+    var p = document.createElement('p');
+    setText(p, '20 вопросов по операционному гайду. После прохождения результат сохранится автоматически.');
+    card.appendChild(p);
+
+    var row = document.createElement('div');
+    row.className = 'info-row';
+    var pills = [['20', 'вопросов'], ['~10', 'минут'], ['3', 'типа']];
+    for (var i = 0; i < pills.length; i++) {
+      var pill = document.createElement('div');
+      pill.className = 'info-pill';
+      var strong = document.createElement('strong');
+      setText(strong, pills[i][0]);
+      var span = document.createElement('span');
+      setText(span, pills[i][1]);
+      pill.appendChild(strong);
+      pill.appendChild(span);
+      row.appendChild(pill);
+    }
+    card.appendChild(row);
+
+    var lbl = document.createElement('label');
+    lbl.className = 'name-label';
+    setText(lbl, 'Твоё имя');
+    card.appendChild(lbl);
+
+    var inp = document.createElement('input');
+    inp.className = 'name-input';
+    inp.type = 'text';
+    inp.placeholder = 'Например: Аня';
+    inp.autocomplete = 'off';
+    card.appendChild(inp);
+
+    var btn = document.createElement('button');
+    btn.className = 'start-btn';
+    btn.disabled = true;
+    setText(btn, 'Начать тест');
+    card.appendChild(btn);
+
+    inp.addEventListener('input', function() {
+      userName = inp.value.trim();
+      btn.disabled = !userName;
+    });
+    inp.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && userName) startQuiz();
+    });
+    btn.addEventListener('click', function() {
+      if (userName) startQuiz();
+    });
+
+    s.appendChild(card);
+  }
+
+  function startQuiz() {
+    document.getElementById('start').style.display = 'none';
+    document.getElementById('quiz').style.display = 'block';
+    document.getElementById('prog').style.display = 'flex';
+    render();
+  }
+
+  // ── Progress ──────────────────────────────────────────────────
+  function updProg() {
+    var done = 0;
+    for (var i = 0; i < N; i++) { if (CHK[i]) done++; }
+    document.getElementById('pf').style.width = Math.round(done / N * 100) + '%';
+    setText(document.getElementById('pl'), done + ' / ' + N);
+  }
+
+  // ── Cards ─────────────────────────────────────────────────────
+  function makeCard(i) {
+    var q = Q[i];
+    var card = document.createElement('div');
+    card.className = 'card';
+    card.id = 'c' + i;
+
+    var meta = document.createElement('div');
+    meta.className = 'qmeta';
+    var num = document.createElement('div');
+    num.className = 'qnum';
+    setText(num, i + 1);
+    var tag = document.createElement('div');
+    tag.className = 'qtag';
+    setText(tag, q.t === 'r' ? 'Выбор ответа' : q.t === 'b' ? 'Верно / Неверно' : 'Открытый вопрос');
+    var sec = document.createElement('div');
+    sec.className = 'qsec';
+    setText(sec, q.s);
+    meta.appendChild(num); meta.appendChild(tag); meta.appendChild(sec);
+    card.appendChild(meta);
+
+    var qtxt = document.createElement('div');
+    qtxt.className = 'qtxt';
+    setText(qtxt, q.q);
+    card.appendChild(qtxt);
+
+    var inputDiv = document.createElement('div');
+    card.appendChild(inputDiv);
+    var fb = document.createElement('div');
+    fb.className = 'fb';
+    card.appendChild(fb);
+    var btnDiv = document.createElement('div');
+    card.appendChild(btnDiv);
+
+    renderInput(i, card, inputDiv, fb, btnDiv);
+    return card;
+  }
+
+  function renderInput(i, card, inputDiv, fb, btnDiv) {
+    var q = Q[i];
+    var a = ANS[i];
+    var c = CHK[i];
+
+    inputDiv.innerHTML = '';
+    fb.className = 'fb';
+    fb.innerHTML = '';
+    btnDiv.innerHTML = '';
+
+    card.className = 'card';
+    if (c && q.t !== 'o') {
+      var isOk = (q.t === 'r' && a === q.a) || (q.t === 'b' && a === q.a);
+      card.className = 'card ' + (isOk ? 'ok' : 'err');
+    }
+
+    if (q.t === 'r') {
+      var opts = document.createElement('div');
+      opts.className = 'opts';
+      for (var j = 0; j < q.o.length; j++) {
+        (function(j) {
+          var opt = document.createElement('div');
+          opt.className = 'opt';
+          if (c) {
+            if (j === q.a) opt.className = 'opt ca';
+            else if (a === j) opt.className = 'opt wa';
+          } else if (a === j) {
+            opt.className = 'opt sel';
+          }
+          var dot = document.createElement('div');
+          dot.className = 'dot';
+          var lbl = document.createElement('span');
+          setText(lbl, q.o[j]);
+          opt.appendChild(dot); opt.appendChild(lbl);
+          if (!c) {
+            opt.addEventListener('click', function() {
+              ANS[i] = j;
+              renderInput(i, card, inputDiv, fb, btnDiv);
+            });
+          }
+          opts.appendChild(opt);
+        })(j);
+      }
+      inputDiv.appendChild(opts);
+
+    } else if (q.t === 'b') {
+      var tfw = document.createElement('div');
+      tfw.className = 'tfw';
+      var makeBtn = function(label, val) {
+        var btn = document.createElement('button');
+        btn.className = 'tfb';
+        setText(btn, label);
+        if (c) {
+          btn.disabled = true;
+          if (q.a === val) btn.className = 'tfb ctf';
+          else if (a === val) btn.className = 'tfb wtf';
+        } else if (a === val) {
+          btn.className = 'tfb sel';
+        }
+        if (!c) {
+          btn.addEventListener('click', function() {
+            ANS[i] = val;
+            renderInput(i, card, inputDiv, fb, btnDiv);
+          });
+        }
+        return btn;
+      };
+      tfw.appendChild(makeBtn('Верно', true));
+      tfw.appendChild(makeBtn('Неверно', false));
+      inputDiv.appendChild(tfw);
+
+    } else {
+      var ta = document.createElement('textarea');
+      ta.className = 'ota';
+      ta.placeholder = 'Напишите ответ...';
+      if (a) ta.value = a;
+      if (c) ta.disabled = true;
+      ta.addEventListener('input', function() { ANS[i] = ta.value; });
+      inputDiv.appendChild(ta);
+    }
+
+    if (c) {
+      if (q.t === 'o') {
+        fb.className = 'fb fbop show';
+        var t1 = document.createElement('span');
+        t1.className = 'fbtit';
+        setText(t1, 'Эталонный ответ:');
+        fb.appendChild(t1);
+        fb.appendChild(document.createTextNode(q.e));
+      } else {
+        var isOkFb = (q.t === 'r' && a === q.a) || (q.t === 'b' && a === q.a);
+        fb.className = 'fb ' + (isOkFb ? 'fbok' : 'fberr') + ' show';
+        var t2 = document.createElement('span');
+        t2.className = 'fbtit';
+        setText(t2, isOkFb ? 'Правильно!' : 'Неверно.');
+        fb.appendChild(t2);
+        fb.appendChild(document.createTextNode(q.e));
+      }
+    }
+
+    if (!c) {
+      var cbtn = document.createElement('button');
+      cbtn.className = 'cbtn';
+      setText(cbtn, 'Проверить');
+      cbtn.disabled = (ANS[i] === null && q.t !== 'o');
+      cbtn.addEventListener('click', function() {
+        if (q.t === 'o') {
+          var tael = inputDiv.querySelector('textarea');
+          ANS[i] = tael ? tael.value.trim() : '';
+          if (!ANS[i]) ANS[i] = '(без ответа)';
+        }
+        if (ANS[i] === null) return;
+        CHK[i] = true;
+        renderInput(i, card, inputDiv, fb, btnDiv);
+        updProg();
+      });
+      btnDiv.appendChild(cbtn);
+    } else {
+      var nav = document.createElement('div');
+      nav.className = 'navrow';
+      if (i > 0) {
+        var back = document.createElement('button');
+        back.className = 'nbtn';
+        setText(back, '< Назад');
+        back.addEventListener('click', function() { goTo(i - 1); });
+        nav.appendChild(back);
+      }
+      var fwd = document.createElement('button');
+      fwd.className = 'nbtn pri';
+      setText(fwd, i < N - 1 ? 'Далее >' : 'Завершить тест');
+      fwd.addEventListener('click', function() {
+        if (i < N - 1) goTo(i + 1); else showRes();
+      });
+      nav.appendChild(fwd);
+      btnDiv.appendChild(nav);
+    }
+  }
+
+  function goTo(i) {
+    var el = document.getElementById('c' + i);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function render() {
+    var quiz = document.getElementById('quiz');
+    quiz.innerHTML = '';
+    for (var i = 0; i < N; i++) {
+      quiz.appendChild(makeCard(i));
+    }
+    updProg();
+  }
+
+  // ── Results + save ────────────────────────────────────────────
+  function showRes() {
+    var unck = [];
+    for (var i = 0; i < N; i++) { if (!CHK[i]) unck.push(i + 1); }
+    if (unck.length > 0) {
+      if (!confirm('Непроверенные вопросы: ' + unck.join(', ') + '. Завершить?')) return;
+    }
+
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('prog').style.display = 'none';
+
+    var cor = 0, tot = 0;
+    var details = [];
+    for (var i = 0; i < N; i++) {
+      if (!CHK[i] || Q[i].t === 'o') continue;
+      tot++;
+      var isOk = (Q[i].t === 'r' && ANS[i] === Q[i].a) || (Q[i].t === 'b' && ANS[i] === Q[i].a);
+      if (isOk) {
+        cor++;
+        details.push((i + 1) + '. OK');
+      } else {
+        var given = Q[i].t === 'r' ? (ANS[i] !== null ? Q[i].o[ANS[i]] : '—') : (ANS[i] === true ? 'Верно' : 'Неверно');
+        var right = Q[i].t === 'r' ? Q[i].o[Q[i].a] : (Q[i].a ? 'Верно' : 'Неверно');
+        details.push((i + 1) + '. X (дал: ' + given + '; верно: ' + right + ')');
+      }
+    }
+    var pct = tot > 0 ? Math.round(cor / tot * 100) : 0;
+    var title = pct >= 80 ? 'Отличная работа!' : pct >= 60 ? 'Хороший результат' : 'Нужно повторить';
+    var sub   = pct >= 80 ? 'Готов(а) к смене!' : pct >= 60 ? 'Есть моменты для повторения.' : 'Перечитай гайд и попробуй снова.';
+
+    var res = document.getElementById('res');
+    res.innerHTML = '';
+
+    // Score card
+    var sc = document.createElement('div');
+    sc.className = 'sc';
+
+    var scName = document.createElement('div');
+    scName.className = 'scname';
+    setText(scName, userName);
+    sc.appendChild(scName);
+
+    var scPct = document.createElement('div');
+    scPct.className = 'scpct';
+    setText(scPct, pct + '%');
+    sc.appendChild(scPct);
+
+    var scTit = document.createElement('div');
+    scTit.className = 'sctit';
+    setText(scTit, title);
+    sc.appendChild(scTit);
+
+    var scSub = document.createElement('div');
+    scSub.className = 'scsub';
+    setText(scSub, sub);
+    sc.appendChild(scSub);
+
+    var scOf = document.createElement('div');
+    scOf.className = 'scof';
+    setText(scOf, cor + ' из ' + tot + ' вопросов');
+    sc.appendChild(scOf);
+
+    // Saving badge
+    var badge = document.createElement('div');
+    badge.className = 'saving-badge';
+    setText(badge, 'Сохраняю результат...');
+    sc.appendChild(badge);
+
+    res.appendChild(sc);
+    res.style.display = 'block';
+    window.scrollTo(0, 0);
+
+    // Send to Google Sheets
+    var payload = {
+      name: userName,
+      score: pct + '%',
+      correct: cor,
+      total: tot,
+      details: details.join(' | ')
+    };
+
+    var img = new Image();
+    img.src = SCRIPT_URL + '?name=' + encodeURIComponent(payload.name)
+      + '&score=' + encodeURIComponent(payload.score)
+      + '&correct=' + encodeURIComponent(payload.correct)
+      + '&total=' + encodeURIComponent(payload.total)
+      + '&details=' + encodeURIComponent(payload.details);
+    img.onload = img.onerror = function() {
+      badge.className = 'saved-badge';
+      setText(badge, 'Результат сохранён');
+    };
+
+    // Review cards
+    var rvt = document.createElement('div');
+    rvt.className = 'rvtit';
+    setText(rvt, 'Разбор вопросов');
+    res.appendChild(rvt);
+
+    for (var i = 0; i < N; i++) {
+      if (!CHK[i]) continue;
+      var q = Q[i];
+      var ans = ANS[i];
+      var isOpen = q.t === 'o';
+      var isOkRv = !isOpen && ((q.t === 'r' && ans === q.a) || (q.t === 'b' && ans === q.a));
+
+      var rvc = document.createElement('div');
+      rvc.className = 'rvc ' + (isOpen ? 'rvop' : isOkRv ? 'rvok' : 'rverr');
+
+      var rmeta = document.createElement('div');
+      rmeta.className = 'rvmeta';
+      var bdg = document.createElement('span');
+      bdg.className = 'rvbdg ' + (isOpen ? 'op' : isOkRv ? 'ok' : 'err');
+      setText(bdg, isOpen ? 'Открытый' : isOkRv ? 'Верно' : 'Неверно');
+      var rsec = document.createElement('span');
+      rsec.className = 'rvsec';
+      setText(rsec, q.s);
+      rmeta.appendChild(bdg); rmeta.appendChild(rsec);
+      rvc.appendChild(rmeta);
+
+      var rvq = document.createElement('div');
+      rvq.className = 'rvq';
+      setText(rvq, (i + 1) + '. ' + q.q);
+      rvc.appendChild(rvq);
+
+      var rva = document.createElement('div');
+      rva.className = 'rva';
+      if (q.t === 'r') {
+        rva.innerHTML = 'Ваш ответ: <b>' + (ans !== null ? q.o[ans] : '—') + '</b>';
+        if (!isOkRv) {
+          var rvca = document.createElement('div');
+          rvca.className = 'rvca';
+          rvca.innerHTML = 'Правильно: <b>' + q.o[q.a] + '</b>';
+          rvc.appendChild(rva); rvc.appendChild(rvca);
+        } else { rvc.appendChild(rva); }
+      } else if (q.t === 'b') {
+        rva.innerHTML = 'Ваш ответ: <b>' + (ans === true ? 'Верно' : 'Неверно') + '</b>';
+        if (!isOkRv) {
+          var rvca2 = document.createElement('div');
+          rvca2.className = 'rvca';
+          rvca2.innerHTML = 'Правильно: <b>' + (q.a ? 'Верно' : 'Неверно') + '</b>';
+          rvc.appendChild(rva); rvc.appendChild(rvca2);
+        } else { rvc.appendChild(rva); }
+      } else {
+        rva.innerHTML = 'Ваш ответ: <b>' + (ans || '—') + '</b>';
+        rvc.appendChild(rva);
+      }
+
+      var rvex = document.createElement('div');
+      rvex.className = 'rvex';
+      setText(rvex, q.e);
+      rvc.appendChild(rvex);
+      res.appendChild(rvc);
+    }
+
+    var rbtn = document.createElement('button');
+    rbtn.className = 'rbtn';
+    setText(rbtn, 'Пройти тест заново');
+    rbtn.addEventListener('click', restart);
+    res.appendChild(rbtn);
+  }
+
+  function restart() {
+    for (var i = 0; i < N; i++) { ANS[i] = null; CHK[i] = false; }
+    userName = '';
+    document.getElementById('res').style.display = 'none';
+    document.getElementById('res').innerHTML = '';
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('quiz').innerHTML = '';
+    document.getElementById('prog').style.display = 'none';
+    document.getElementById('start').style.display = 'block';
+    renderStart();
+    window.scrollTo(0, 0);
+  }
+
+  renderStart();
+})();
+</script>
+</body>
+</html>
