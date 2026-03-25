@@ -17,9 +17,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .pf{height:100%;background:linear-gradient(90deg,var(--md),var(--ac));border-radius:99px;transition:width .4s;width:0%;}
 .pl{font-size:12px;font-weight:700;color:var(--md);white-space:nowrap;}
 .wrap{max-width:680px;margin:0 auto;padding:20px 16px 60px;}
+
+/* Start screen */
+.start-screen{background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(26,60,42,.1);padding:32px 28px;text-align:center;}
+.start-screen h2{font-size:20px;font-weight:800;color:var(--dk);margin-bottom:8px;}
+.start-screen p{font-size:14px;color:var(--mu);margin-bottom:24px;line-height:1.5;}
+.name-label{display:block;font-size:13px;font-weight:700;color:var(--dk);margin-bottom:8px;text-align:left;}
+.name-input{width:100%;padding:13px 16px;border:2px solid #dceee4;border-radius:10px;font-family:inherit;font-size:15px;color:var(--tx);background:var(--pl);outline:none;transition:border-color .15s;}
+.name-input:focus{border-color:var(--ac);}
+.start-btn{display:block;width:100%;margin-top:20px;background:var(--dk);color:#fff;border:none;border-radius:12px;padding:15px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;}
+.start-btn:active{background:var(--md);}
+.start-btn:disabled{background:#ccc;cursor:default;}
+.info-row{display:flex;gap:12px;margin-bottom:24px;}
+.info-pill{flex:1;background:var(--lt);border-radius:10px;padding:12px 8px;text-align:center;}
+.info-pill strong{display:block;font-size:20px;font-weight:800;color:var(--dk);}
+.info-pill span{font-size:11px;color:var(--mu);font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+
+/* Cards */
 .card{background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(26,60,42,.1);border:2px solid transparent;padding:22px 20px 18px;margin-bottom:18px;}
-.card.ok{border-color:var(--ac);}
-.card.err{border-color:var(--rd);}
+.card.ok{border-color:var(--ac);}.card.err{border-color:var(--rd);}
 .qmeta{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
 .qnum{background:var(--dk);color:#fff;font-size:11px;font-weight:700;width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .qtag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--lt);color:var(--md);padding:3px 9px;border-radius:20px;}
@@ -53,28 +69,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .fb.fberr{background:#fdf2f2;color:#8b1a1a;border-left:4px solid var(--rd);}
 .fb.fbop{background:#fffbea;color:#7a5000;border-left:4px solid var(--gd);}
 .fbtit{font-weight:700;display:block;margin-bottom:3px;}
+
+/* Results */
 #res{display:none;}
 .sc{background:var(--dk);border-radius:16px;padding:30px 22px;text-align:center;margin-bottom:20px;}
-.scpct{font-size:60px;font-weight:900;color:var(--ac);line-height:1;margin:12px 0 4px;}
+.scname{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:4px;}
+.scpct{font-size:60px;font-weight:900;color:var(--ac);line-height:1;margin:8px 0 4px;}
 .sctit{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px;}
 .scsub{color:rgba(255,255,255,.5);font-size:13px;}
 .scof{color:rgba(255,255,255,.35);font-size:12px;margin-top:4px;}
+.saved-badge{display:inline-block;background:rgba(82,183,136,.2);color:var(--ac);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;margin-top:14px;}
+.saving-badge{display:inline-block;background:rgba(255,255,255,.1);color:rgba(255,255,255,.5);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;margin-top:14px;}
 .rvtit{font-size:18px;font-weight:800;color:var(--dk);margin:0 0 14px;}
 .rvc{background:#fff;border-radius:12px;padding:16px 18px;margin-bottom:12px;border-left:5px solid;box-shadow:0 2px 8px rgba(0,0,0,.05);}
-.rvc.rvok{border-color:var(--ac);}
-.rvc.rverr{border-color:var(--rd);}
-.rvc.rvop{border-color:var(--gd);}
+.rvc.rvok{border-color:var(--ac);}.rvc.rverr{border-color:var(--rd);}.rvc.rvop{border-color:var(--gd);}
 .rvmeta{display:flex;gap:8px;align-items:center;margin-bottom:6px;}
 .rvbdg{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:20px;}
-.rvbdg.ok{background:#eafaf1;color:#1a5c36;}
-.rvbdg.err{background:#fdf2f2;color:#8b1a1a;}
-.rvbdg.op{background:#fffbea;color:#7a5000;}
+.rvbdg.ok{background:#eafaf1;color:#1a5c36;}.rvbdg.err{background:#fdf2f2;color:#8b1a1a;}.rvbdg.op{background:#fffbea;color:#7a5000;}
 .rvsec{font-size:10px;color:var(--mu);font-weight:600;text-transform:uppercase;}
 .rvq{font-size:13px;font-weight:700;color:var(--dk);margin-bottom:5px;}
-.rva{font-size:12px;color:var(--mu);}
-.rva b{color:var(--tx);font-weight:700;}
-.rvca{font-size:12px;color:var(--md);margin-top:2px;}
-.rvca b{font-weight:700;}
+.rva{font-size:12px;color:var(--mu);}.rva b{color:var(--tx);font-weight:700;}
+.rvca{font-size:12px;color:var(--md);margin-top:2px;}.rvca b{font-weight:700;}
 .rvex{font-size:12px;color:var(--mu);margin-top:5px;line-height:1.4;}
 .rbtn{display:block;width:100%;background:var(--dk);color:#fff;border:none;border-radius:12px;padding:14px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;margin-top:20px;}
 </style>
@@ -85,12 +100,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <h1>Аттестация сотрудника</h1>
   <p>Проверь знание операционного гайда</p>
 </div>
-<div class="prog" id="prog">
+<div class="prog" id="prog" style="display:none">
   <div class="pt"><div class="pf" id="pf"></div></div>
   <div class="pl" id="pl">0 / 20</div>
 </div>
 <div class="wrap">
-  <div id="quiz"></div>
+  <div id="start"></div>
+  <div id="quiz" style="display:none"></div>
   <div id="res"></div>
 </div>
 <script type="application/json" id="qdata">
@@ -119,15 +135,88 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </script>
 <script>
 (function() {
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3Qq6RtCqKJG75AhnjDkiFJcSh2xJ30JRvFjXFpnHdpq5CuDZOGmeiyaOGlSEoO98u1A/exec';
   var Q = JSON.parse(document.getElementById('qdata').textContent);
   var N = Q.length;
   var ANS = [];
   var CHK = [];
+  var userName = '';
   for (var i = 0; i < N; i++) { ANS.push(null); CHK.push(false); }
 
   function setText(el, text) { el.textContent = text; }
-  function setHtml(el, html) { el.innerHTML = html; }
 
+  // ── Start screen ──────────────────────────────────────────────
+  function renderStart() {
+    var s = document.getElementById('start');
+    s.innerHTML = '';
+
+    var card = document.createElement('div');
+    card.className = 'start-screen';
+
+    var h2 = document.createElement('h2');
+    setText(h2, 'Привет!');
+    card.appendChild(h2);
+
+    var p = document.createElement('p');
+    setText(p, '20 вопросов по операционному гайду. После прохождения результат сохранится автоматически.');
+    card.appendChild(p);
+
+    var row = document.createElement('div');
+    row.className = 'info-row';
+    var pills = [['20', 'вопросов'], ['~10', 'минут'], ['3', 'типа']];
+    for (var i = 0; i < pills.length; i++) {
+      var pill = document.createElement('div');
+      pill.className = 'info-pill';
+      var strong = document.createElement('strong');
+      setText(strong, pills[i][0]);
+      var span = document.createElement('span');
+      setText(span, pills[i][1]);
+      pill.appendChild(strong);
+      pill.appendChild(span);
+      row.appendChild(pill);
+    }
+    card.appendChild(row);
+
+    var lbl = document.createElement('label');
+    lbl.className = 'name-label';
+    setText(lbl, 'Твоё имя');
+    card.appendChild(lbl);
+
+    var inp = document.createElement('input');
+    inp.className = 'name-input';
+    inp.type = 'text';
+    inp.placeholder = 'Например: Аня';
+    inp.autocomplete = 'off';
+    card.appendChild(inp);
+
+    var btn = document.createElement('button');
+    btn.className = 'start-btn';
+    btn.disabled = true;
+    setText(btn, 'Начать тест');
+    card.appendChild(btn);
+
+    inp.addEventListener('input', function() {
+      userName = inp.value.trim();
+      btn.disabled = !userName;
+    });
+    inp.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && userName) startQuiz();
+    });
+    btn.addEventListener('click', function() {
+      if (userName) startQuiz();
+    });
+
+    s.appendChild(card);
+  }
+
+  function startQuiz() {
+    document.getElementById('start').style.display = 'none';
+    document.getElementById('quiz').style.display = 'block';
+    document.getElementById('prog').style.display = 'flex';
+    render();
+  }
+
+  // ── Progress ──────────────────────────────────────────────────
   function updProg() {
     var done = 0;
     for (var i = 0; i < N; i++) { if (CHK[i]) done++; }
@@ -135,13 +224,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     setText(document.getElementById('pl'), done + ' / ' + N);
   }
 
+  // ── Cards ─────────────────────────────────────────────────────
   function makeCard(i) {
     var q = Q[i];
     var card = document.createElement('div');
     card.className = 'card';
     card.id = 'c' + i;
 
-    // Meta row
     var meta = document.createElement('div');
     meta.className = 'qmeta';
     var num = document.createElement('div');
@@ -156,22 +245,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     meta.appendChild(num); meta.appendChild(tag); meta.appendChild(sec);
     card.appendChild(meta);
 
-    // Question text
     var qtxt = document.createElement('div');
     qtxt.className = 'qtxt';
     setText(qtxt, q.q);
     card.appendChild(qtxt);
 
-    // Input area
     var inputDiv = document.createElement('div');
     card.appendChild(inputDiv);
-
-    // Feedback
     var fb = document.createElement('div');
     fb.className = 'fb';
     card.appendChild(fb);
-
-    // Button area
     var btnDiv = document.createElement('div');
     card.appendChild(btnDiv);
 
@@ -184,13 +267,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     var a = ANS[i];
     var c = CHK[i];
 
-    // Clear
     inputDiv.innerHTML = '';
     fb.className = 'fb';
     fb.innerHTML = '';
     btnDiv.innerHTML = '';
 
-    // Update card border
     card.className = 'card';
     if (c && q.t !== 'o') {
       var isOk = (q.t === 'r' && a === q.a) || (q.t === 'b' && a === q.a);
@@ -229,7 +310,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     } else if (q.t === 'b') {
       var tfw = document.createElement('div');
       tfw.className = 'tfw';
-
       var makeBtn = function(label, val) {
         var btn = document.createElement('button');
         btn.className = 'tfb';
@@ -249,7 +329,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         }
         return btn;
       };
-
       tfw.appendChild(makeBtn('Верно', true));
       tfw.appendChild(makeBtn('Неверно', false));
       inputDiv.appendChild(tfw);
@@ -264,7 +343,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       inputDiv.appendChild(ta);
     }
 
-    // Feedback
     if (c) {
       if (q.t === 'o') {
         fb.className = 'fb fbop show';
@@ -274,17 +352,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         fb.appendChild(t1);
         fb.appendChild(document.createTextNode(q.e));
       } else {
-        var isOk2 = (q.t === 'r' && a === q.a) || (q.t === 'b' && a === q.a);
-        fb.className = 'fb ' + (isOk2 ? 'fbok' : 'fberr') + ' show';
+        var isOkFb = (q.t === 'r' && a === q.a) || (q.t === 'b' && a === q.a);
+        fb.className = 'fb ' + (isOkFb ? 'fbok' : 'fberr') + ' show';
         var t2 = document.createElement('span');
         t2.className = 'fbtit';
-        setText(t2, isOk2 ? 'Правильно!' : 'Неверно.');
+        setText(t2, isOkFb ? 'Правильно!' : 'Неверно.');
         fb.appendChild(t2);
         fb.appendChild(document.createTextNode(q.e));
       }
     }
 
-    // Buttons
     if (!c) {
       var cbtn = document.createElement('button');
       cbtn.className = 'cbtn';
@@ -337,6 +414,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     updProg();
   }
 
+  // ── Results + save ────────────────────────────────────────────
   function showRes() {
     var unck = [];
     for (var i = 0; i < N; i++) { if (!CHK[i]) unck.push(i + 1); }
@@ -348,15 +426,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     document.getElementById('prog').style.display = 'none';
 
     var cor = 0, tot = 0;
+    var details = [];
     for (var i = 0; i < N; i++) {
       if (!CHK[i] || Q[i].t === 'o') continue;
       tot++;
-      if ((Q[i].t === 'r' && ANS[i] === Q[i].a) || (Q[i].t === 'b' && ANS[i] === Q[i].a)) cor++;
+      var isOk = (Q[i].t === 'r' && ANS[i] === Q[i].a) || (Q[i].t === 'b' && ANS[i] === Q[i].a);
+      if (isOk) {
+        cor++;
+        details.push((i + 1) + '. OK');
+      } else {
+        var given = Q[i].t === 'r' ? (ANS[i] !== null ? Q[i].o[ANS[i]] : '—') : (ANS[i] === true ? 'Верно' : 'Неверно');
+        var right = Q[i].t === 'r' ? Q[i].o[Q[i].a] : (Q[i].a ? 'Верно' : 'Неверно');
+        details.push((i + 1) + '. X (дал: ' + given + '; верно: ' + right + ')');
+      }
     }
-
     var pct = tot > 0 ? Math.round(cor / tot * 100) : 0;
     var title = pct >= 80 ? 'Отличная работа!' : pct >= 60 ? 'Хороший результат' : 'Нужно повторить';
-    var sub   = pct >= 80 ? 'Ты готов(а) к смене!' : pct >= 60 ? 'Есть несколько моментов для повторения.' : 'Перечитай гайд и попробуй снова.';
+    var sub   = pct >= 80 ? 'Готов(а) к смене!' : pct >= 60 ? 'Есть моменты для повторения.' : 'Перечитай гайд и попробуй снова.';
 
     var res = document.getElementById('res');
     res.innerHTML = '';
@@ -364,49 +450,88 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     // Score card
     var sc = document.createElement('div');
     sc.className = 'sc';
-    sc.innerHTML = '<div style="font-size:44px;margin-bottom:8px;">' + (pct >= 80 ? '&#9733;' : pct >= 60 ? '&#128170;' : '&#128218;') + '</div>';
-    var scTit = document.createElement('div');
-    scTit.className = 'sctit';
-    setText(scTit, title);
-    var scSub = document.createElement('div');
-    scSub.className = 'scsub';
-    setText(scSub, sub);
+
+    var scName = document.createElement('div');
+    scName.className = 'scname';
+    setText(scName, userName);
+    sc.appendChild(scName);
+
     var scPct = document.createElement('div');
     scPct.className = 'scpct';
     setText(scPct, pct + '%');
+    sc.appendChild(scPct);
+
+    var scTit = document.createElement('div');
+    scTit.className = 'sctit';
+    setText(scTit, title);
+    sc.appendChild(scTit);
+
+    var scSub = document.createElement('div');
+    scSub.className = 'scsub';
+    setText(scSub, sub);
+    sc.appendChild(scSub);
+
     var scOf = document.createElement('div');
     scOf.className = 'scof';
-    setText(scOf, cor + ' из ' + tot + ' автоматических вопросов');
-    sc.appendChild(scTit); sc.appendChild(scSub); sc.appendChild(scPct); sc.appendChild(scOf);
-    res.appendChild(sc);
+    setText(scOf, cor + ' из ' + tot + ' вопросов');
+    sc.appendChild(scOf);
 
-    // Review title
+    // Saving badge
+    var badge = document.createElement('div');
+    badge.className = 'saving-badge';
+    setText(badge, 'Сохраняю результат...');
+    sc.appendChild(badge);
+
+    res.appendChild(sc);
+    res.style.display = 'block';
+    window.scrollTo(0, 0);
+
+    // Send to Google Sheets
+    var payload = {
+      name: userName,
+      score: pct + '%',
+      correct: cor,
+      total: tot,
+      details: details.join(' | ')
+    };
+
+    var img = new Image();
+    img.src = SCRIPT_URL + '?name=' + encodeURIComponent(payload.name)
+      + '&score=' + encodeURIComponent(payload.score)
+      + '&correct=' + encodeURIComponent(payload.correct)
+      + '&total=' + encodeURIComponent(payload.total)
+      + '&details=' + encodeURIComponent(payload.details);
+    img.onload = img.onerror = function() {
+      badge.className = 'saved-badge';
+      setText(badge, 'Результат сохранён');
+    };
+
+    // Review cards
     var rvt = document.createElement('div');
     rvt.className = 'rvtit';
     setText(rvt, 'Разбор вопросов');
     res.appendChild(rvt);
 
-    // Review cards
     for (var i = 0; i < N; i++) {
       if (!CHK[i]) continue;
       var q = Q[i];
       var ans = ANS[i];
       var isOpen = q.t === 'o';
-      var isOk = !isOpen && ((q.t === 'r' && ans === q.a) || (q.t === 'b' && ans === q.a));
+      var isOkRv = !isOpen && ((q.t === 'r' && ans === q.a) || (q.t === 'b' && ans === q.a));
 
       var rvc = document.createElement('div');
-      rvc.className = 'rvc ' + (isOpen ? 'rvop' : isOk ? 'rvok' : 'rverr');
+      rvc.className = 'rvc ' + (isOpen ? 'rvop' : isOkRv ? 'rvok' : 'rverr');
 
-      var meta = document.createElement('div');
-      meta.className = 'rvmeta';
+      var rmeta = document.createElement('div');
+      rmeta.className = 'rvmeta';
       var bdg = document.createElement('span');
-      bdg.className = 'rvbdg ' + (isOpen ? 'op' : isOk ? 'ok' : 'err');
-      setText(bdg, isOpen ? 'Открытый' : isOk ? 'Верно' : 'Неверно');
-      var sec = document.createElement('span');
-      sec.className = 'rvsec';
-      setText(sec, q.s);
-      meta.appendChild(bdg); meta.appendChild(sec);
-      rvc.appendChild(meta);
+      bdg.className = 'rvbdg ' + (isOpen ? 'op' : isOkRv ? 'ok' : 'err');
+      setText(bdg, isOpen ? 'Открытый' : isOkRv ? 'Верно' : 'Неверно');
+      var rsec = document.createElement('span');
+      rsec.className = 'rvsec';
+      setText(rsec, q.s);
+      rmeta.appendChild(bdg); rmeta.appendChild(rsec);
+      rvc.appendChild(rmeta);
 
       var rvq = document.createElement('div');
       rvq.className = 'rvq';
@@ -417,26 +542,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       rva.className = 'rva';
       if (q.t === 'r') {
         rva.innerHTML = 'Ваш ответ: <b>' + (ans !== null ? q.o[ans] : '—') + '</b>';
-        if (!isOk) {
+        if (!isOkRv) {
           var rvca = document.createElement('div');
           rvca.className = 'rvca';
           rvca.innerHTML = 'Правильно: <b>' + q.o[q.a] + '</b>';
-          rvc.appendChild(rva);
-          rvc.appendChild(rvca);
-        } else {
-          rvc.appendChild(rva);
-        }
+          rvc.appendChild(rva); rvc.appendChild(rvca);
+        } else { rvc.appendChild(rva); }
       } else if (q.t === 'b') {
         rva.innerHTML = 'Ваш ответ: <b>' + (ans === true ? 'Верно' : 'Неверно') + '</b>';
-        if (!isOk) {
+        if (!isOkRv) {
           var rvca2 = document.createElement('div');
           rvca2.className = 'rvca';
           rvca2.innerHTML = 'Правильно: <b>' + (q.a ? 'Верно' : 'Неверно') + '</b>';
-          rvc.appendChild(rva);
-          rvc.appendChild(rvca2);
-        } else {
-          rvc.appendChild(rva);
-        }
+          rvc.appendChild(rva); rvc.appendChild(rvca2);
+        } else { rvc.appendChild(rva); }
       } else {
         rva.innerHTML = 'Ваш ответ: <b>' + (ans || '—') + '</b>';
         rvc.appendChild(rva);
@@ -446,32 +565,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       rvex.className = 'rvex';
       setText(rvex, q.e);
       rvc.appendChild(rvex);
-
       res.appendChild(rvc);
     }
 
-    // Restart button
     var rbtn = document.createElement('button');
     rbtn.className = 'rbtn';
     setText(rbtn, 'Пройти тест заново');
     rbtn.addEventListener('click', restart);
     res.appendChild(rbtn);
-
-    res.style.display = 'block';
-    window.scrollTo(0, 0);
   }
 
   function restart() {
     for (var i = 0; i < N; i++) { ANS[i] = null; CHK[i] = false; }
+    userName = '';
     document.getElementById('res').style.display = 'none';
     document.getElementById('res').innerHTML = '';
-    document.getElementById('quiz').style.display = 'block';
-    document.getElementById('prog').style.display = 'flex';
-    render();
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('quiz').innerHTML = '';
+    document.getElementById('prog').style.display = 'none';
+    document.getElementById('start').style.display = 'block';
+    renderStart();
     window.scrollTo(0, 0);
   }
 
-  render();
+  renderStart();
 })();
 </script>
 </body>
