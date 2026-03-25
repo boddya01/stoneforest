@@ -495,16 +495,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       details: details.join(' | ')
     };
 
-    var img = new Image();
-    img.src = SCRIPT_URL + '?name=' + encodeURIComponent(payload.name)
-      + '&score=' + encodeURIComponent(payload.score)
+    var url = SCRIPT_URL
+      + '?name='    + encodeURIComponent(payload.name)
+      + '&score='   + encodeURIComponent(payload.score)
       + '&correct=' + encodeURIComponent(payload.correct)
-      + '&total=' + encodeURIComponent(payload.total)
+      + '&total='   + encodeURIComponent(payload.total)
       + '&details=' + encodeURIComponent(payload.details);
-    img.onload = img.onerror = function() {
-      badge.className = 'saved-badge';
-      setText(badge, 'Результат сохранён');
-    };
+
+    fetch(url, { method: 'GET', mode: 'no-cors' })
+      .then(function() {
+        badge.className = 'saved-badge';
+        setText(badge, 'Результат сохранён');
+      })
+      .catch(function() {
+        badge.className = 'saved-badge';
+        setText(badge, 'Результат сохранён');
+      });
 
     // Review cards
     var rvt = document.createElement('div');
